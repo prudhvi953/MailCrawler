@@ -25,7 +25,7 @@ public class Crawler {
 			resume = Boolean.valueOf(args[1]);
 		} else {
 			throw (new IllegalArgumentException(
-"Two arguments must be provided"));
+					"Two arguments must be provided"));
 		}
 
 		CrawlLinks crawler = new CrawlLinks();

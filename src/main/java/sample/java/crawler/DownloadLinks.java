@@ -15,6 +15,10 @@ import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+/**
+ * Download links contains downloadLinks method which
+ * downloads mails from Urls
+ */ 
 public class DownloadLinks {
 	final static Logger LOGGER = Logger.getLogger(DownloadLinks.class);
 

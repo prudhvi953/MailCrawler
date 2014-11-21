@@ -11,6 +11,9 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+/**
+ * DBConnection gets connection to DB and close it.
+ */
 public class DBConnection {
 	final static Logger LOGGER = Logger.getLogger(DBConnection.class);
 

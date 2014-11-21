@@ -13,6 +13,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * CrawlLinks contains crawlLinks method which
+ * downloads mails from Urls
+ */
 public class CrawlLinks {
 	final static Logger LOGGER = Logger.getLogger(CrawlLinks.class);
 	
