@@ -17,8 +17,8 @@ public class Crawler {
 			ClassNotFoundException, SQLException {
 		final String START_URL = "http://mail-archives.apache.org/mod_mbox/maven-users/";
 		Set<String> urlSet = new HashSet<String>();
-		String outFile = null;
-		boolean resume = false;
+		String outFile;
+		boolean resume;
 
 		if (args.length == 2) {
 			outFile = args[0];

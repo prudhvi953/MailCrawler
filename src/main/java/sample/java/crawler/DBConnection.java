@@ -14,10 +14,10 @@ import org.apache.log4j.Logger;
 public class DBConnection {
 	final static Logger LOGGER = Logger.getLogger(DBConnection.class);
 
-	private String dbDriver = "";
-	private String dbUrl = "";
-	private String dbUser = "";
-	private String dbPass = "";
+	private String dbDriver;
+	private String dbUrl;
+	private String dbUser;
+	private String dbPass;
 
 	public DBConnection() throws IOException {
 		Properties props = new Properties();

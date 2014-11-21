@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 public class GetBufferedWriter {
 	final static Logger LOGGER = Logger.getLogger(GetBufferedWriter.class);
 
-	private boolean resume = false;
+	private boolean resume;
 	private File file;
 
 	public GetBufferedWriter(String outFile, boolean resume) {
