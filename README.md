@@ -14,4 +14,5 @@ To run MailCrawler you need:
 3. Create required database and table for running application SQL can be found in resources directory.
 4. Change the logger file name in log4j.properties in resources directory.
 5. Provide credentials for connecting to database in db.properties file in conf direcotry.
-5. run maven package
+5. run maven package and it takes two arguments output file name and resume flag which is either true or false 
+Ex:  java -cp target/Crawler-1.0-SNAPSHOT.jar sample.java.crawler.Crawler output true
