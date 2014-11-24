@@ -29,7 +29,7 @@ public class Crawler {
 			throw (new IllegalArgumentException(
 					"Two arguments must be provided"));
 		}
-
+		
 		CrawlLinks crawler = new CrawlLinks();
 		urlSet = crawler.crawlUrl(START_URL);
 

@@ -49,7 +49,7 @@ public class DownloadLinks {
 				st.executeUpdate("delete from link");
 				Crawler.LOGGER.info("Previous run is cleared");
 			} catch (SQLException sqle) {
-				Crawler.LOGGER.info("Encountered SQLException:" + sqle);
+				Crawler.LOGGER.error("Encountered SQLException:" + sqle);
 			}
 		}
 
@@ -74,7 +74,7 @@ public class DownloadLinks {
 						st.executeUpdate("insert into link(url,isDownloaded) values ('"
 								+ url + "',1)");
 					} catch (SQLException e) {
-						Crawler.LOGGER.info("Encountered SQLException:" + e);
+						Crawler.LOGGER.error("Encountered SQLException:" + e);
 					}
 				} else {
 					Crawler.LOGGER.info("Skipped as already downloaded");
