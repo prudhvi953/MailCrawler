@@ -20,9 +20,9 @@ import org.jsoup.nodes.Document;
  */ 
 public class DownloadLinks {
 
-	private final static int MAX_TIMEOUT = 1 * 1000;
-	private final static boolean IGNORE_HTTP_ERRORS = true;
-	private final static boolean IGNORE_CONTENT_TYPE = true;
+	private static final int MAX_TIMEOUT = 1 * 1000;
+	private static final boolean IGNORE_HTTP_ERRORS = true;
+	private static final boolean IGNORE_CONTENT_TYPE = true;
 
 	private Set<String> urlSet = new HashSet<String>();
 

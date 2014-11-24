@@ -7,8 +7,8 @@ import java.io.IOException;
 
 public class GetBufferedWriter {
 
-	final private boolean resume;
-	final private File file;
+	private final boolean resume;
+	private final File file;
 
 	public GetBufferedWriter(String outFile, boolean resume) {
 		this.resume = resume;

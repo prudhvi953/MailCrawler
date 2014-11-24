@@ -16,13 +16,13 @@ import org.jsoup.select.Elements;
  * CrawlLinks contains crawlLinks method which downloads mails from Urls
  */
 public class CrawlLinks {
-	private final static int MAX_TIMEOUT = 1 * 1000;
-	private final static boolean IGNORE_HTTP_ERRORS = true;
-	private final static boolean IGNORE_CONTENT_TYPE = true;
+	private static final int MAX_TIMEOUT = 1 * 1000;
+	private static final boolean IGNORE_HTTP_ERRORS = true;
+	private static final boolean IGNORE_CONTENT_TYPE = true;
 
-	private final static String VALID_URL = "http://mail-archives.apache.org/mod_mbox/maven-users/201411";
-	private final static String ANCHOR_TAG = "a";
-	private final static String ABS_HREF = "abs:href";
+	private static final String VALID_URL = "http://mail-archives.apache.org/mod_mbox/maven-users/201411";
+	private static final String ANCHOR_TAG = "a";
+	private static final String ABS_HREF = "abs:href";
 
 	public Set<String> crawlUrl(String url) throws IOException {
 		Set<String> urlSet = new HashSet<String>();

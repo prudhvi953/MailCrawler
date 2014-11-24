@@ -14,10 +14,10 @@ import java.util.Properties;
  */
 public class DBConnection {
 
-	final private String dbDriver;
-	final private String dbUrl;
-	final private String dbUser;
-	final private String dbPass;
+	private final String dbDriver;
+	private final String dbUrl;
+	private final String dbUser;
+	private final String dbPass;
 
 	public DBConnection() throws IOException {
 		final Properties props = new Properties();
