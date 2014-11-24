@@ -1,4 +1,4 @@
-package sample.java.crawler;
+package training.java.crawler;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,22 +9,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-
 /**
  * DBConnection gets connection to DB and close it.
  */
 public class DBConnection {
-	final static Logger LOGGER = Logger.getLogger(DBConnection.class);
 
-	private String dbDriver;
-	private String dbUrl;
-	private String dbUser;
-	private String dbPass;
+	final private String dbDriver;
+	final private String dbUrl;
+	final private String dbUser;
+	final private String dbPass;
 
 	public DBConnection() throws IOException {
-		Properties props = new Properties();
-		InputStream input = new FileInputStream("conf/db.properties");
+		final Properties props = new Properties();
+		final InputStream input = new FileInputStream("conf/db.properties");
 		props.load(input);
 
 		this.dbDriver = props.getProperty("db.default.driver");
@@ -36,17 +33,16 @@ public class DBConnection {
 	public Connection getConnection() throws ClassNotFoundException,
 			SQLException {
 		Class.forName(dbDriver);
-		Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
-		return con;
+		return DriverManager.getConnection(dbUrl, dbUser, dbPass);
 	}
 
 	public void closeConnection(Connection con) {
 		if (con != null) {
 			try {
 				con.close();
-				LOGGER.info("DB Connection closed successfully");
+				Crawler.LOGGER.info("DB Connection closed successfully");
 			} catch (SQLException sqle) {
-				LOGGER.error("Exception while closing connection" + sqle);
+				Crawler.LOGGER.error("Exception while closing connection" + sqle);
 			}
 		}
 	}
@@ -55,9 +51,9 @@ public class DBConnection {
 		if (st != null) {
 			try {
 				st.close();
-				LOGGER.info("Statement closed successfully");
+				Crawler.LOGGER.info("Statement closed successfully");
 			} catch (SQLException sqle) {
-				LOGGER.error("Exception while closing statement" + sqle);
+				Crawler.LOGGER.error("Exception while closing statement" + sqle);
 			}
 		}
 	}

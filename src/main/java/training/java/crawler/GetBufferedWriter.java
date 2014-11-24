@@ -1,17 +1,14 @@
-package sample.java.crawler;
+package training.java.crawler;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
-
 public class GetBufferedWriter {
-	final static Logger LOGGER = Logger.getLogger(GetBufferedWriter.class);
 
-	private boolean resume;
-	private File file;
+	final private boolean resume;
+	final private File file;
 
 	public GetBufferedWriter(String outFile, boolean resume) {
 		this.resume = resume;
@@ -29,17 +26,16 @@ public class GetBufferedWriter {
 
 	public BufferedWriter getWriter() throws IOException {
 		FileWriter fw = new FileWriter(file.getAbsoluteFile(), resume);
-		BufferedWriter bw = new BufferedWriter(fw);
-		return bw;
+		return new BufferedWriter(fw);
 	}
 
-	public void closeWriter(BufferedWriter bwriter) {
+	public void closeWriter(BufferedWriter bwriter) throws IOException {
 		if (bwriter != null) {
 			try {
 				bwriter.close();
-				LOGGER.info("BufferedWriter closed successfully");
+				Crawler.LOGGER.info("BufferedWriter closed successfully");
 			} catch (IOException ioe) {
-				LOGGER.error("Exception while closing BufferedWriter" + ioe);
+				Crawler.LOGGER.error("Exception while closing BufferedWriter" + ioe);
 			}
 		}
 	}

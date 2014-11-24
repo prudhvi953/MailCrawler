@@ -1,4 +1,4 @@
-package sample.java.crawler;
+package training.java.crawler;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -20,13 +19,10 @@ import org.jsoup.nodes.Document;
  * downloads mails from Urls
  */ 
 public class DownloadLinks {
-	final static Logger LOGGER = Logger.getLogger(DownloadLinks.class);
 
-	private int MAX_TIMEOUT = 1 * 1000;
-
-	private boolean IGNORE_HTTP_ERRORS = true;
-
-	private boolean IGNORE_CONTENT_TYPE = true;
+	private final static int MAX_TIMEOUT = 1 * 1000;
+	private final static boolean IGNORE_HTTP_ERRORS = true;
+	private final static boolean IGNORE_CONTENT_TYPE = true;
 
 	private Set<String> urlSet = new HashSet<String>();
 
@@ -51,9 +47,9 @@ public class DownloadLinks {
 		if (!resume) {
 			try {
 				st.executeUpdate("delete from link");
-				LOGGER.info("Previous run is cleared");
+				Crawler.LOGGER.info("Previous run is cleared");
 			} catch (SQLException sqle) {
-				LOGGER.info("Encountered SQLException:" + sqle);
+				Crawler.LOGGER.info("Encountered SQLException:" + sqle);
 			}
 		}
 
@@ -69,7 +65,7 @@ public class DownloadLinks {
 					rs = st.executeQuery("select * from link where url='" + url
 							+ "'");
 				} catch (SQLException e) {
-					LOGGER.error("Encountered SQLException:" + e);
+					Crawler.LOGGER.error("Encountered SQLException:" + e);
 				}
 
 				if (!rs.isBeforeFirst()) {
@@ -78,12 +74,12 @@ public class DownloadLinks {
 						st.executeUpdate("insert into link(url,isDownloaded) values ('"
 								+ url + "',1)");
 					} catch (SQLException e) {
-						LOGGER.info("Encountered SQLException:" + e);
+						Crawler.LOGGER.info("Encountered SQLException:" + e);
 					}
 				} else {
-					LOGGER.info("Skipped as already downloaded");
+					Crawler.LOGGER.info("Skipped as already downloaded");
 				}
-				LOGGER.info("Downloading mails from:" + url);
+				Crawler.LOGGER.info("Downloading mails from:" + url);
 			}
 		}
 
