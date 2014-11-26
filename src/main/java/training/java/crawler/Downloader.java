@@ -17,65 +17,49 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 /**
- * Download links contains downloadLinks method which
- * downloads mails from Urls
- */ 
+ * Download links contains downloadLinks method which downloads mails from Urls
+ */
 public class Downloader {
 	private static final Logger LOGGER = Logger.getLogger(Downloader.class);
 
-	public void downloadLink(Set<URL> urlSet, BufferedWriter bwriter, boolean resume)
-			throws Exception {
+	public void downloadUrl(Set<URL> urlSet, BufferedWriter bwriter,
+			boolean resume) throws Exception {
+		Set<URL> dbUrlSet = new HashSet<URL>();
+		
 		Pattern pattern = Pattern.compile(".*/raw/.*/.*");
 
-		try (DBConnecter dbCon = new DBConnecter()) {
-		Connection con = dbCon.getConnecter();
-		Statement st = con.createStatement();
+		try (DBOperator dbOperator = new DBOperator()) {
+			Connection con = dbOperator.getConnecter();
+			Statement st = dbOperator.getStatement(con);
 
-		if (!resume) {
-			try {
-				st.executeUpdate("delete from link");
-				LOGGER.info("Previous run is cleared");
-			} catch (SQLException sqle) {
-				LOGGER.error("Encountered SQLException:" + sqle);
+			if (!resume) {
+				dbOperator.dbClean(st);
 			}
-		}
 
-		/*
-		 * Traversing the urlSet for urls and check if it's already downloaded
-		 * else download and mark it as download by inserting into database
-		 */
-		for (URL url : urlSet) {
-			Matcher matcher = pattern.matcher(url.toString());
-			
-			if (matcher.matches()) {
-				try {
-					ResultSet rs = st.executeQuery("select * from link where url='" + url.toString()
-							+ "'");
-					if (!rs.next()) {
-						bwriter.write(getDocument(url.toString()).text().toString() + "\n");
-						try {
-							st.executeUpdate("insert into link(url,isDownloaded) values ('"
-									+ url + "',1)");
-						} catch (SQLException e) {
-							LOGGER.error("Encountered SQLException:" + e);
-							throw new IllegalStateException();
-						}
+			/*
+			 * Traversing the urlSet for urls and check if it's already
+			 * downloaded else download and mark it as download by inserting
+			 * into database
+			 */
+			for (URL url : urlSet) {	
+				Matcher matcher = pattern.matcher(url.toString());
+
+				if (matcher.matches()) {
+					if (dbOperator.isDownloaded(st, url)) {
+						bwriter.write(getDocument(url.toString()).text()
+								.toString() + "\n");
+						dbUrlSet.add(url);
 					}
-				} catch (SQLException e) {
-					LOGGER.error("Encountered SQLException:" + e);
-					throw new IllegalStateException();
+					LOGGER.info("Downloading mails from:" + url);
 				}
-				LOGGER.info("Downloading mails from:" + url);
 			}
-		}
-		dbCon.closeStatement(st);
+			dbOperator.dbBatchUpdate(st, dbUrlSet);
 		}
 	}
-	
+
 	public Document getDocument(String string) throws IOException {
-		//FIXME get source for this
-		return Jsoup.connect(string).ignoreContentType(true)
-				.timeout(1*1000).ignoreHttpErrors(true)
-				.get();
+		// FIXME get source for this
+		return Jsoup.connect(string).ignoreContentType(true).timeout(1 * 1000)
+				.ignoreHttpErrors(true).get();
 	}
 }

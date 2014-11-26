@@ -68,8 +68,8 @@ public class Crawler {
 		} while(!urlQueue.isEmpty() && !(url = urlQueue.remove()).equals(null));
 		
 		//FIXME check if this code can be written without add and subsequent remove of the first element
-		
-		/*while (iterator.hasNext()) {
+		/*urlQueue.add(url);
+		  while (iterator.hasNext()) {
 			url = urlQueue.remove();
 			Document doc = getDocument(url);
 			Elements links = doc.select(ANCHOR_TAG);
@@ -119,12 +119,12 @@ public class Crawler {
 			boolean resume = Boolean.valueOf(args[2]);
 			
 			Crawler crawler = new Crawler();
-			Set<URL> urlSet = new HashSet<URL>(); //crawler.crawl(startUrl);
+			Set<URL> urlSet = crawler.crawl(startUrl);
 			
 			Downloader downloader = new Downloader();
 			try (MyBufferedWriter bufWriter = new MyBufferedWriter(outFile, resume)) {
 				BufferedWriter bwriter = bufWriter.getWriter();
-			downloader.downloadLink(urlSet, bwriter, resume);
+			downloader.downloadUrl(urlSet, bwriter, resume);
 			}
 		} else {
 			throw new IllegalArgumentException(
