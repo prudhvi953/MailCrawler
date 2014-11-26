@@ -70,7 +70,7 @@ public class DBOperator implements AutoCloseable {
 		try(ResultSet rs = st.executeQuery("select * from link where url='"
 							+ url.toString() + "'")) {
 			if(!rs.next()) {
-			return false;	
+				return false;	
 			}
 		}
 		return true;
