@@ -9,52 +9,50 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 /**
  * DBConnection gets connection to DB and close it.
  */
-public class DBConnection {
-
+public class DBConnecter implements AutoCloseable {
+	private static final Logger LOGGER = Logger.getLogger(DBConnecter.class);
+	
 	private final String dbDriver;
 	private final String dbUrl;
 	private final String dbUser;
 	private final String dbPass;
 
-	public DBConnection() throws IOException {
+	public DBConnecter()  throws IOException {
 		final Properties props = new Properties();
 		final InputStream input = new FileInputStream("conf/db.properties");
 		props.load(input);
-
+		
 		this.dbDriver = props.getProperty("db.default.driver");
 		this.dbUrl = props.getProperty("db.default.url");
 		this.dbUser = props.getProperty("db.default.user");
 		this.dbPass = props.getProperty("db.default.password");
 	}
 
-	public Connection getConnection() throws ClassNotFoundException,
+	public Connection getConnecter() throws ClassNotFoundException,
 			SQLException {
 		Class.forName(dbDriver);
 		return DriverManager.getConnection(dbUrl, dbUser, dbPass);
 	}
 
-	public void closeConnection(Connection con) {
-		if (con != null) {
-			try {
-				con.close();
-				Crawler.LOGGER.info("DB Connection closed successfully");
-			} catch (SQLException sqle) {
-				Crawler.LOGGER.error("Exception while closing connection" + sqle);
-			}
-		}
-	}
-
-	public void closeStatement(Statement st) {
+	public void closeStatement(Statement st) throws SQLException {
 		if (st != null) {
 			try {
 				st.close();
-				Crawler.LOGGER.info("Statement closed successfully");
+				LOGGER.info("Statement closed successfully");
 			} catch (SQLException sqle) {
-				Crawler.LOGGER.error("Exception while closing statement" + sqle);
+				LOGGER.error("Exception while closing statement" + sqle);
+				throw new IllegalStateException();
 			}
 		}
+	}
+	@Override
+	public void close() throws Exception {
+		LOGGER.info("DBConnection closed");
+		
 	}
 }
