@@ -128,7 +128,7 @@ public class Crawler {
 			}
 		} else {
 			throw new IllegalArgumentException(
-					"Two arguments must be provided");
+					"Three arguments must be provided");
 		}
 		
 	}
