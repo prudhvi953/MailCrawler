@@ -45,7 +45,7 @@ public class Downloader {
 				Matcher matcher = pattern.matcher(url.toString());
 
 				if (matcher.matches()) {
-					if (dbOperator.isDownloaded(st, url)) {
+					if (!dbOperator.isDownloaded(st, url)) {
 						bwriter.write(getDocument(url.toString()).text()
 								.toString() + "\n");
 						dbUrlSet.add(url);
