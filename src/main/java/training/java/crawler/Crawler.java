@@ -66,40 +66,6 @@ public class Crawler {
 				}
 			}
 		} while(!urlQueue.isEmpty() && !(url = urlQueue.remove()).equals(null));
-		
-		//FIXME check if this code can be written without add and subsequent remove of the first element
-		/*urlQueue.add(url);
-		  while (iterator.hasNext()) {
-			url = urlQueue.remove();
-			Document doc = getDocument(url);
-			Elements links = doc.select(ANCHOR_TAG);
-
-			for (Element link : links) {
-				String absUrl = link.attr(ABS_HREF);
-				if (absUrl.contains(VALID_URL) && !urlSet.contains(absUrl)) {
-					urlSet.add(absUrl);
-					urlQueue.add(absUrl);
-					Crawler.LOGGER.info("Crawled:" + absUrl);
-				}
-			}
-		}*/
-		
-		/*
-		 for(String url : urlSet) {
-			Document doc = getDocument(url);
-			Elements links = doc.select(ANCHOR_TAG);
-			
-			for (Element link : links) {
-				String absUrl = link.attr(ABS_HREF);
-				if (absUrl.contains(VALID_URL) && !urlSet.contains(absUrl)) {
-					urlSet.add(absUrl);
-					urlQueue.add(absUrl);
-					Crawler.LOGGER.info("Crawled:" + absUrl);
-				}
-			}
-		
-		} */
-		
 		return urlSet;
 	}
 
